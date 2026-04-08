@@ -1,0 +1,16 @@
+plugins { id 'net.fabricmc.fabric-loom-remap' version '1.14-SNAPSHOT' }
+group = 'com.bedrocklocator'
+base { archivesName = 'BedrockLocator' }
+repositories {
+    maven { name='Fabric'; url='https://maven.fabricmc.net/' }
+    mavenCentral()
+}
+dependencies {
+    minecraft 'com.mojang:minecraft:1.21.11'
+    mappings loom.officialMojangMappings()
+    modImplementation 'net.fabricmc:fabric-loader:0.18.2'
+    modImplementation 'net.fabricmc.fabric-api:fabric-api:0.141.3+1.21.11'
+}
+java { sourceCompatibility=JavaVersion.VERSION_21; targetCompatibility=JavaVersion.VERSION_21 }
+tasks.withType(JavaCompile).configureEach { it.options.release=21 }
+jar { from('LICENSE'){duplicatesStrategy=DuplicatesStrategy.EXCLUDE} }
