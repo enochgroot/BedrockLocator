@@ -10,29 +10,25 @@ jobs:
       - uses: actions/setup-java@v4
         with: {java-version: "21", distribution: "temurin"}
       - uses: gradle/actions/setup-gradle@v4
-      - name: Build and capture output
-        id: build
+      - name: Build
         run: |
           chmod +x gradlew
-          ./gradlew --no-build-cache build 2>&1 | tee /tmp/build.log || true
-          echo 'BUILD_LOG<<EOF' >> $GITHUB_OUTPUT
-          tail -80 /tmp/build.log >> $GITHUB_OUTPUT
-          echo 'EOF' >> $GITHUB_OUTPUT
-      - name: Upload log artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: build-log
-          path: /tmp/build.log
-          if-no-files-found: warn
-      - name: Release or fail
+          ./gradlew --no-build-cache build 2>&1 | tee build_output.txt || true
+      - name: Push build log to repo
+        run: |
+          git config user.email 'action@github.com'
+          git config user.name 'GitHub Action'
+          git add build_output.txt
+          git commit -m 'ci: build log' || true
+          git push || true
+      - name: Check and release
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          if ls build/libs/BedrockLocator-*.jar 2>/dev/null | grep -qv -e sources -e dev; then
-            JAR=$(ls build/libs/BedrockLocator-*.jar | grep -v sources | grep -v dev | head -1)
+          JAR=$(ls build/libs/BedrockLocator-*.jar 2>/dev/null | grep -v sources | grep -v dev | head -1)
+          if [ -n "$JAR" ]; then
             gh release delete v1.0.0 --yes 2>/dev/null || true
-            gh release create v1.0.0 "$JAR" --title 'BedrockLocator v1.0.0' --notes 'Locate coords from Nether bedrock pattern'
+            gh release create v1.0.0 "$JAR" --title 'BedrockLocator v1.0.0' --notes 'Bedrock coord finder'
           else
-            echo 'Build failed — no JAR produced'
-            exit 1
+            echo 'Build failed'; exit 1
           fi
