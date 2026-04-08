@@ -5,6 +5,7 @@ import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
+import com.mojang.blaze3d.platform.InputConstants;
 import org.lwjgl.glfw.GLFW;
 
 public class BedrockLocatorMod implements ClientModInitializer {
@@ -12,9 +13,14 @@ public class BedrockLocatorMod implements ClientModInitializer {
 
     @Override
     public void onInitializeClient() {
-        openKey = KeyBindingHelper.registerKeyBinding(
-            new KeyMapping("key.bedrocklocator.open", GLFW.GLFW_KEY_B, "BedrockLocator")
-        );
+        // In 1.21.11, KeyMapping constructor takes InputConstants.Key and Category
+        // Use KeyBindingHelper which handles category registration for Fabric
+        openKey = KeyBindingHelper.registerKeyBinding(new KeyMapping(
+            "key.bedrocklocator.open",
+            InputConstants.Type.KEYSYM,
+            GLFW.GLFW_KEY_B,
+            "key.categories.misc"
+        ));
         ClientTickEvents.END_CLIENT_TICK.register(mc -> {
             while (openKey.consumeClick()) {
                 if (mc.level != null) mc.setScreen(new BedrockLocatorScreen());
