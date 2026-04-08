@@ -1,0 +1,11 @@
+{
+  "schemaVersion":1,
+  "id":"bedrocklocator",
+  "version":"1.0.0",
+  "name":"BedrockLocator",
+  "description":"Locate coordinates from Nether bedrock ceiling pattern",
+  "environment":"client",
+  "entrypoints":{"client":["com.bedrocklocator.BedrockLocatorMod"]},
+  "mixins":["bedrocklocator.mixins.json"],
+  "depends":{"fabricloader":">=0.15.0","fabric-api":"*","minecraft":">=1.21"}
+}
