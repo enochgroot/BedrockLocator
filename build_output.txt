@@ -1,0 +1,60 @@
+Starting a Gradle Daemon (subsequent builds will be faster)
+
+> Configure project :
+Fabric Loom: 1.14.10
+
+Cannot remap modifiers because it does not exists in any of the targets [] or their parents.
+
+> Task :compileJava
+/home/runner/work/BedrockLocator/BedrockLocator/src/main/java/com/bedrocklocator/BedrockLocatorMod.java:16: error: incompatible types: String cannot be converted to Category
+            new KeyMapping("key.bedrocklocator.open", GLFW.GLFW_KEY_B, "BedrockLocator")
+                                                                       ^
+/home/runner/work/BedrockLocator/BedrockLocator/src/main/java/com/bedrocklocator/BedrockLocatorScreen.java:112: error: method does not override or implement a method from a supertype
+    @Override
+    ^
+/home/runner/work/BedrockLocator/BedrockLocator/src/main/java/com/bedrocklocator/BedrockLocatorScreen.java:117: error: method keyPressed in class Screen cannot be applied to given types;
+        return super.keyPressed(key, scan, mod);
+                    ^
+  required: KeyEvent
+  found:    int,int,int
+  reason: actual and formal argument lists differ in length
+Note: Some messages have been simplified; recompile with -Xdiags:verbose to get full output
+3 errors
+
+> Task :compileJava FAILED
+gradle/actions: Writing build results to /home/runner/work/_temp/.gradle-actions/build-results/__run-1775628684375.json
+
+[Incubating] Problems report is available at: file:///home/runner/work/BedrockLocator/BedrockLocator/build/reports/problems/problems-report.html
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':compileJava'.
+> Compilation failed; see the compiler output below.
+  /home/runner/work/BedrockLocator/BedrockLocator/src/main/java/com/bedrocklocator/BedrockLocatorScreen.java:117: error: method keyPressed in class Screen cannot be applied to given types;
+          return super.keyPressed(key, scan, mod);
+                      ^
+    required: KeyEvent
+    found:    int,int,int
+    reason: actual and formal argument lists differ in length
+  /home/runner/work/BedrockLocator/BedrockLocator/src/main/java/com/bedrocklocator/BedrockLocatorMod.java:16: error: incompatible types: String cannot be converted to Category
+              new KeyMapping("key.bedrocklocator.open", GLFW.GLFW_KEY_B, "BedrockLocator")
+                                                                         ^
+  /home/runner/work/BedrockLocator/BedrockLocator/src/main/java/com/bedrocklocator/BedrockLocatorScreen.java:112: error: method does not override or implement a method from a supertype
+      @Override
+      ^
+  Note: Some messages have been simplified; recompile with -Xdiags:verbose to get full output
+  3 errors
+
+* Try:
+> Check your code and dependencies to fix the compilation error(s)
+> Run with --scan to generate a Build Scan (powered by Develocity).
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 10.
+
+You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+
+For more on this, please refer to https://docs.gradle.org/9.2.1/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+
+BUILD FAILED in 20s
+1 actionable task: 1 executed
